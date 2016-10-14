@@ -1,0 +1,16 @@
+play_roll:
+  counter = 1
+  want_to_roll_again = '\0' #char *roll_again_ptr = &want_to_roll_again;
+  while (counter < 3 and want_to_roll_again == 'Y'):
+    roll_die()
+    print_roll(); #Write function that prints message after roll (or something)
+    counter += 1
+    prompt_to_roll_again();
+  else if (counter == 3): #change this from an else-if to something else
+    ***
+    -prompt for the numbers of the die to "hold"
+    -roll the other die
+    -continue to scoring
+    ***
+  score_die() # Write function that prompts the user to select a scoring method,
+              # and updates the arrays holding the scores
