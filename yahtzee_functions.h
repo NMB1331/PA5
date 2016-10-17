@@ -1,4 +1,4 @@
-//#ifndef YAHTZEE_H
+#ifndef YAHTZEE_H
 #define YAHTZEE_H
 #define UPPER_SCORE_SIZE 7
 #define LOWER_SCORE_SIZE 8
@@ -36,6 +36,18 @@ void sort_array(int array[], int size);
 void roll_die(int die_values[]);
 
 /*************************************************************
+* Function: print_die                                       *
+* Date Created: 10/16/2016                                  *
+* Date Last Modified: 10/16/2016                            *
+* Description: Prints the die values to the console         *
+* Input parameters: int die_values[]                        *
+* Returns: None                                             *
+* Preconditions: None                                       *
+* Postconditions: None                                      *
+*************************************************************/
+void print_die(int die_values[]);
+
+/*************************************************************
 * Function: compute_score                                   *
 * Date Created: 10/15/2016                                  *
 * Date Last Modified: 10/15/2016                            *
@@ -71,4 +83,4 @@ void prompt_roll_again(char *go_again_ptr);
 *************************************************************/
 void roll_and_check(int die_values[], int num_die_values[]);
 
-//#endif YAHTZEE_H
+#endif YAHTZEE_H

@@ -17,6 +17,9 @@ int main(void) {
     round_number += 1;
   }
 
+  //Testing functions
+  roll_and_check(die_values, num_die_values);
+
   return 0;
 }
 

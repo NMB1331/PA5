@@ -21,6 +21,15 @@ void roll_die(int die_values[]) {
   sort_array(die_values, 6);
 }
 
+//Function that prints the die values to the console
+void print_die(int die_values[]) {
+  printf("DIE VALUES OF THIS ROLL: ");
+  for (int i=1; i<DIE_VALUES_SIZE; i++) {
+    printf("%d ", die_values[i]);
+  }
+  printf("\n");
+}
+
 //Function that computes the scores of the 2 player_two_uppers
 void compute_score(int uppers[], int lowers[], int *score_ptr) {
   int score = 0;
@@ -45,6 +54,20 @@ void prompt_roll_again(char *go_again_ptr) {
     *go_again_ptr = 'Y'; }
   else {
     *go_again_ptr = '\0'; }
+}
+
+//Function that does the rolling for a round (rolls, prompts to save/roll again)
+void roll_and_check(int die_values[], int num_die_values[]) {
+  char roll_again_test = '\0';
+  int counter = 1;
+  do {
+    printf("Round %d:\n", counter);
+    roll_die(die_values);
+    print_die(die_values);
+    prompt_roll_again(&roll_again_test);
+    counter += 1;
+    //system('cls');
+  } while(roll_again_test == 'Y' && counter <= 3);
 }
 
 //
