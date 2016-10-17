@@ -10,15 +10,14 @@ int main(void) {
   int round_number = 1;
 
   //Main body of the game (plays 13 rounds)
+  /*
   while (round_number <= 13) {
     printf("Round number %d\n", round_number);
-
-
     round_number += 1;
   }
-
+  */
   //Testing functions
-  roll_and_check(die_values, num_die_values);
+  roll_and_check(die_values);
 
   return 0;
 }

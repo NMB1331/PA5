@@ -22,8 +22,8 @@ void roll_die(int die_values[]) {
 }
 
 //Function that prints the die values to the console
-void print_die(int die_values[]) {
-  printf("DIE VALUES OF THIS ROLL: ");
+void print_die(int die_values[], int counter) {
+  printf("Die values of roll %d: ", counter);
   for (int i=1; i<DIE_VALUES_SIZE; i++) {
     printf("%d ", die_values[i]);
   }
@@ -57,17 +57,79 @@ void prompt_roll_again(char *go_again_ptr) {
 }
 
 //Function that does the rolling for a round (rolls, prompts to save/roll again)
-void roll_and_check(int die_values[], int num_die_values[]) {
-  char roll_again_test = '\0';
-  int counter = 1;
+void roll_and_check(int die_values[]) {
+  //Variables initialized
+  int i1 = 0, i2 = 0, i3 = 0, i4= 0, i5 = 0, how_many = 0, counter = 1;
+  char wanna_roll_again = '\0';
+
+  //Die rolled and printed (first roll)
+  roll_die(die_values);
+  print_die(die_values, counter);
+  prompt_roll_again(&wanna_roll_again);
+  counter += 1;
+
+  //Second and third roll (if necessary)
   do {
-    printf("Round %d:\n", counter);
-    roll_die(die_values);
-    print_die(die_values);
-    prompt_roll_again(&roll_again_test);
-    counter += 1;
-    //system('cls');
-  } while(roll_again_test == 'Y' && counter <= 3);
+  //Prompts for how many die should be kept
+  do {
+  printf("How many do you want to keep? ");
+  scanf("%d", &how_many);
+  } while (how_many < 1 || how_many > 5);
+
+  //Prompts for which ones should be kept; re-rolls the others
+  switch (how_many) {
+    case 0: roll_die(die_values);
+            break;
+
+    case 1: printf("Which one do you want to keep? (1-5, left to right): ");
+            scanf("%d", &i1);
+            for (int i=1; i<6; i++) {
+              if (i == i1) {
+                continue; }
+              else {
+                die_values[i] = rand() % 6 + 1; }
+            }
+            break;
+
+    case 2: printf("Which ones do you want to keep? (1-5, left to right): ");
+            scanf("%d%d", &i1, &i2);
+            for (int i=1; i<6; i++) {
+              if (i == i1 || i == i2) {
+                continue; }
+              else {
+                die_values[i] = rand() % 6 + 1; }
+            }
+            break;
+
+    case 3: printf("Which ones do you want to keep? (1-5, left to right): ");
+            scanf("%d%d%d", &i1, &i2, &i3);
+            for (int i=1; i<6; i++) {
+              if (i == i1 || i == i2 || i == i3) {
+                continue; }
+              else {
+                die_values[i] = rand() % 6 + 1; }
+            }
+            break;
+
+    case 4: printf("Which ones do you want to keep? (1-5, left to right): ");
+            scanf("%d%d%d%d", &i1, &i2, &i3, &i4);
+            for (int i=1; i<6; i++) {
+              if (i == i1 || i == i2 || i == i3 || i == i4) {
+                continue; }
+              else {
+                die_values[i] = rand() % 6 + 1; }
+            }
+            break;
+
+    case 5: break;
+
+  }
+  print_die(die_values, counter);
+  if (counter < 3) {
+  prompt_roll_again(&wanna_roll_again); }
+  counter += 1;
+} while (wanna_roll_again == 'Y' && counter <= 3);
+
 }
 
 //

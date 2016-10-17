@@ -45,7 +45,7 @@ void roll_die(int die_values[]);
 * Preconditions: None                                       *
 * Postconditions: None                                      *
 *************************************************************/
-void print_die(int die_values[]);
+void print_die(int die_values[], int counter);
 
 /*************************************************************
 * Function: compute_score                                   *
@@ -81,6 +81,6 @@ void prompt_roll_again(char *go_again_ptr);
 * Preconditions: None                                       *
 * Postconditions: None                                      *
 *************************************************************/
-void roll_and_check(int die_values[], int num_die_values[]);
+void roll_and_check(int die_values[]);
 
 #endif YAHTZEE_H
