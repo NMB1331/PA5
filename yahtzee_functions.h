@@ -48,6 +48,18 @@ void roll_die(int die_values[]);
 void print_die(int die_values[], int counter);
 
 /*************************************************************
+* Function: get_num_die                                     *
+* Date Created: 10/18/2016                                  *
+* Date Last Modified: 10/18/2016                            *
+* Description: Gets the number of die values                *
+* Input: Array die values, array num die values             *
+* Returns: None                                             *
+* Preconditions: None                                       *
+* Postconditions: None                                      *
+*************************************************************/
+void get_num_die(int die_values[], int num_die_values[]);
+
+/*************************************************************
 * Function: compute_score                                   *
 * Date Created: 10/15/2016                                  *
 * Date Last Modified: 10/15/2016                            *
@@ -82,5 +94,17 @@ void prompt_roll_again(char *go_again_ptr);
 * Postconditions: None                                      *
 *************************************************************/
 void roll_and_check(int die_values[]);
+
+/*************************************************************
+* Function: score_the_roll                                  *
+* Date Created: 10/18/2016                                  *
+* Date Last Modified: 10/18/2016                            *
+* Description: Scores the die values after rolling          *
+* Input: Arrays num_die_values, upper score, lower score    *
+* Returns: None                                             *
+* Preconditions: None                                       *
+* Postconditions: None                                      *
+*************************************************************/
+void score_the_roll(int num_die_values[], int uppers[], int lowers[]);
 
 #endif YAHTZEE_H

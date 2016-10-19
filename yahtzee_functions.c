@@ -30,6 +30,14 @@ void print_die(int die_values[], int counter) {
   printf("\n");
 }
 
+//Function that stores the number of every die value in an array (used for scoring)
+void get_num_die(int die_values[], int num_die_values[]) {
+  for (int i=1; i<6; i++) {
+    int x = die_values[i];
+    num_die_values[x] += 1;
+  }
+}
+
 //Function that computes the scores of the 2 player_two_uppers
 void compute_score(int uppers[], int lowers[], int *score_ptr) {
   int score = 0;
@@ -41,7 +49,7 @@ void compute_score(int uppers[], int lowers[], int *score_ptr) {
   for (int i=0; i<LOWER_SCORE_SIZE; i++) {
     score += lowers[i];
   }
-  //Sets p1/p2 score equal to calculated total
+  //Sets p1/p2 score equal to calculated total         //Add 35 point bonus!
   *score_ptr = score;
 }
 
@@ -62,7 +70,7 @@ void roll_and_check(int die_values[]) {
   int i1 = 0, i2 = 0, i3 = 0, i4= 0, i5 = 0, how_many = 0, counter = 1;
   char wanna_roll_again = '\0';
 
-  //Die rolled and printed (first roll)
+  //Die rolled and printed (first roll); User prompted to roll again
   roll_die(die_values);
   print_die(die_values, counter);
   prompt_roll_again(&wanna_roll_again);
@@ -70,6 +78,8 @@ void roll_and_check(int die_values[]) {
 
   //Second and third roll (if necessary)
   do {
+    if (wanna_roll_again == '\0') {
+      break; }
   //Prompts for how many die should be kept
   do {
   printf("How many do you want to keep? ");
@@ -124,6 +134,7 @@ void roll_and_check(int die_values[]) {
     case 5: break;
 
   }
+  //Prints the die, prompts for a 3rd roll
   print_die(die_values, counter);
   if (counter < 3) {
   prompt_roll_again(&wanna_roll_again); }

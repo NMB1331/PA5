@@ -18,6 +18,12 @@ int main(void) {
   */
   //Testing functions
   roll_and_check(die_values);
+  get_num_die(die_values, num_die_values);
+
+  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
+    printf("%d ", num_die_values[i]);
+  }
+  printf("\n");
 
   return 0;
 }
