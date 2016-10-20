@@ -8,6 +8,7 @@ int main(void) {
   int player_two_uppers[7] = { 0 }, player_two_lowers[8] = { 0 }, check_p2_score_option[14] = { 0 }, p2_score = 0;
   int die_values[6] = { 0 }, num_die_values[7] = { 0 };
   int round_number = 1;
+  int test = 0;
 
   //Main body of the game (plays 13 rounds)
   /*
@@ -19,11 +20,7 @@ int main(void) {
   //Testing functions
   roll_and_check(die_values);
   get_num_die(die_values, num_die_values);
-
-  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
-    printf("%d ", num_die_values[i]);
-  }
-  printf("\n");
+  score_roll(die_values, num_die_values, player_one_uppers, player_one_lowers, check_p1_score_option);
 
   return 0;
 }
