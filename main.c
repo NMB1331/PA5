@@ -11,24 +11,48 @@ int main(void) {
   int test = 0;
 
   //Main body of the game (plays 13 rounds)
-  /*
   while (round_number <= 13) {
-    printf("Round number %d\n", round_number);
+    printf("ROUND NUMBER %d\n", round_number);
+
+    //For debugging
+    printf("P1 CURRENT SCORE: %d\n", sum_array(player_one_uppers, 7) + sum_array(player_one_lowers, 8));
+
+    //Plays round for player 1
+    printf("PLAYER 1 TURN\n");
+    roll_and_check(die_values);
+    get_num_die(die_values, num_die_values);
+    score_roll(die_values, num_die_values, player_one_uppers, player_one_lowers, check_p1_score_option);
+    //system('cls');
+
+    //Plays round for player 2
+    printf("PLAYER 2 TURN\n");
+
+    //For debugging
+    printf("P2 CURRENT SCORE: %d\n", sum_array(player_two_uppers, 7) + sum_array(player_two_lowers, 8));
+
+    roll_and_check(die_values);
+    get_num_die(die_values, num_die_values);
+    score_roll(die_values, num_die_values, player_two_uppers, player_two_lowers, check_p2_score_option);
+    //system('cls');
+
     round_number += 1;
   }
-  */
-  //Testing functions
-  roll_and_check(die_values);
-  get_num_die(die_values, num_die_values);
-  score_roll(die_values, num_die_values, player_one_uppers, player_one_lowers, check_p1_score_option);
+
+  //Calculates score; determines winner
+  compute_score(player_one_uppers, player_one_lowers, &p1_score);
+  compute_score(player_two_uppers, player_two_lowers, &p2_score);
+  if (p1_score > p2_score) {
+    printf("Player 1 wins!!! Congratulations!\n");
+    printf("Player 2, suck less next time\n"); }
+  else if (p2_score > p1_score) {
+      printf("Player 2 wins!!! Congratulations!\n");
+      printf("Player 1, suck less next time\n");
+    }
+  else if (p1_score == p2_score) {
+    printf("Holy hell, it's a tie! I guess you better play again!\n"); }
+  else {
+    printf("Uh oh! You shouldn't be seeing this! Something went wrong...\n"); }
+
 
   return 0;
 }
-
-/*
-NOTES:
--for scoring, print a menu where they enter 1-13, and enter the way they want to score (then switch-case!)
--also, write functions to check for every possible scoring method (if they select something they don't have, they get a zero!)
--store score values (3 of a kind, etc.) in an array, with the index as the die number, and the value as the points
--for debugging, consider printing "stats" before every roll (current score, etc.)
-*/

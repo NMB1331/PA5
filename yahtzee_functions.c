@@ -54,11 +54,17 @@ void compute_score(int uppers[], int lowers[], int *score_ptr) {
   for (int i=0; i<UPPER_SCORE_SIZE; i++) {
     score += uppers[i];
   }
+
+  //Computes 35 point bonus
+  if (score > 63) {
+    score += 35; }
+
   //Sums lower score, adds to total
   for (int i=0; i<LOWER_SCORE_SIZE; i++) {
     score += lowers[i];
   }
-  //Sets p1/p2 score equal to calculated total         //Add 35 point bonus!
+
+  //Sets p1/p2 score equal to calculated total
   *score_ptr = score;
 }
 
@@ -72,6 +78,106 @@ void prompt_roll_again(char *go_again_ptr) {
   else {
     *go_again_ptr = '\0'; }
 }
+
+//////////////////////////LOWER SCORE FUNCTIONS////////////////////////////////
+
+//Function that scores a three of a kind
+void three_of_a_kind(int die_values[], int num_die_values[], int lowers[]) {
+  int is_three = 0;
+  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
+          if (num_die_values[i] == 3) {
+            is_three += 1;
+            break; }
+    }
+  if (is_three >= 1) {
+    lowers[1] = sum_array(die_values, DIE_VALUES_SIZE);
+  }
+  else {
+    lowers[1] = 0;
+  }
+}
+
+//Function that scores a four of a kind
+void four_of_a_kind(int die_values[], int num_die_values[], int lowers[]) {
+  int is_four = 0;
+  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
+          if (num_die_values[i] == 4) {
+            is_four += 1;
+            break; }
+    }
+  if (is_four >= 1) {
+    lowers[2] = sum_array(die_values, DIE_VALUES_SIZE);
+  }
+  else {
+    lowers[2] = 0;
+  }
+}
+
+//Function that scores a full house (3 of a kind and a pair)
+void full_house(int num_die_values[], int lowers[]) {
+  int is_full_three = 0, is_full_pair = 0;
+  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
+    if (num_die_values[i] == 3) {
+      is_full_three += 1; }
+    else if (num_die_values[i] == 2) {
+      is_full_pair += 1; }
+  }
+  if (is_full_three == 1 && is_full_pair == 1) {
+    lowers[3] = 25; }
+  else {
+    lowers[3] = 0; }
+}
+
+//Function that scores a small straight (4 in a row)
+void small_straight(int num_die_values[], int lowers[]) {
+  int counter = 0;
+  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
+    if (counter == 4) {
+      break; }
+    if (num_die_values[i] >= 1) {
+      counter += 1; }
+    else if (num_die_values[i] == 0) {
+      counter = 0; }
+  }
+  if (counter == 4) {
+    lowers[4] = 30; }
+  else {
+    lowers[4] = 0; }
+}
+
+//Function that scores a large straight (5 in a row)
+void large_straight(int num_die_values[], int lowers[]) {
+  int counter = 0;
+  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
+    if (counter == 5) {
+      break; }
+    if (num_die_values[i] == 1) {
+      counter += 1; }
+    else if (num_die_values[i] == 0) {
+      counter = 0; }
+  }
+  if (counter == 5) {
+    lowers[5] = 40; }
+  else {
+    lowers[5] = 0; }
+}
+
+//Function that scores a yahtzee (5 of a kind)
+void score_yahtzee(int num_die_values[], int lowers[]) {
+  int is_yahtzee = 0;
+  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
+          if (num_die_values[i] == 5) {
+            is_yahtzee += 1;
+            break; }
+    }
+  if (is_yahtzee >= 1) {
+    lowers[6] = 50; }
+  else {
+    lowers[6] = 0; }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 //Function that does the rolling for a round (rolls, prompts to save/roll again)
 void roll_and_check(int die_values[]) {
@@ -93,7 +199,7 @@ void roll_and_check(int die_values[]) {
   do {
   printf("How many do you want to keep? ");
   scanf("%d", &how_many);
-  } while (how_many < 1 || how_many > 5);
+} while (how_many < 0 || how_many > 5);
 
   //Prompts for which ones should be kept; re-rolls the others
   switch (how_many) {
@@ -175,111 +281,6 @@ void prompt_score_type(int *score_method, int check_score_option[]) {
   *score_method = method;
 
 }
-
-//////////////////////////LOWER SCORE FUNCTIONS////////////////////////////////
-
-//Function that scores a three of a kind
-void three_of_a_kind(int die_values[], int num_die_values[], int lowers[]) {
-  int is_three = 0;
-  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
-          if (num_die_values[i] == 3) {
-            printf("Three of a kind!\n"); //For debugging
-            is_three += 1;
-            break; }
-    }
-  if (is_three >= 1) {
-    lowers[1] = sum_array(die_values, DIE_VALUES_SIZE);
-  }
-  else {
-    lowers[1] = 0;
-  }
-}
-
-//Function that scores a four of a kind
-void four_of_a_kind(int die_values[], int num_die_values[], int lowers[]) {
-  int is_four = 0;
-  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
-          if (num_die_values[i] == 4) {
-            printf("Four of a kind!\n"); //For debugging
-            is_four += 1;
-            break; }
-    }
-  if (is_four >= 1) {
-    lowers[2] = sum_array(die_values, DIE_VALUES_SIZE);
-  }
-  else {
-    lowers[2] = 0;
-  }
-}
-
-//Function that scores a full house (3 of a kind and a pair)
-void full_house(int num_die_values[], int lowers[]) {
-  int is_full_three = 0, is_full_pair = 0;
-  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
-    if (num_die_values[i] == 3) {
-      is_full_three += 1; }
-    else if (num_die_values[i] == 2) {
-      is_full_pair += 1; }
-  }
-  if (is_full_three == 1 && is_full_pair == 1) {
-    printf("Full house!\n");
-    lowers[3] = 25; }
-  else {
-    lowers[3] = 0; }
-}
-
-//Function that scores a small straight (4 in a row)
-void small_straight(int num_die_values[], int lowers[]) {
-  int counter = 0;
-  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
-    if (counter == 4) {
-      break; }
-    if (num_die_values[i] == 1) {
-      counter += 1; }
-    else if (num_die_values[i] == 0) {
-      counter = 0; }
-  }
-  if (counter == 4) {
-    printf("Small straight!\n");
-    lowers[4] = 30; }
-  else {
-    lowers[4] = 0; }
-}
-
-//Function that scores a large straight (5 in a row)
-void large_straight(int num_die_values[], int lowers[]) {
-  int counter = 0;
-  for (int i=1; i<NUM_DIE_VALUES_SIZE; i++) {
-    if (counter == 5) {
-      break; }
-    if (num_die_values[i] == 1) {
-      counter += 1; }
-    else if (num_die_values[i] == 0) {
-      counter = 0; }
-  }
-  if (counter == 5) {
-    printf("Large straight!\n");
-    lowers[5] = 40; }
-  else {
-    lowers[5] = 0; }
-}
-
-//Function that scores a yahtzee (5 of a kind)
-void score_yahtzee(int num_die_values[], int lowers[]) {
-  int is_yahtzee = 0;
-  for (int i=NUM_DIE_VALUES_SIZE-1; i>0; i--) {
-          if (num_die_values[i] == 5) {
-            printf("Yahtzee!\n"); //For debugging
-            is_yahtzee += 1;
-            break; }
-    }
-  if (is_yahtzee >= 1) {
-    lowers[6] = 50; }
-  else {
-    lowers[6] = 0; }
-}
-
-///////////////////////////////////////////////////////////////////////////////
 
 //Function that scores the roll, based on user's choice
 void score_roll(int die_values[], int num_die_values[], int uppers[], int lowers[], int check_score_option[]) {
